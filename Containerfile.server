@@ -1,0 +1,11 @@
+FROM ubuntu as base
+
+RUN apt-get update
+RUN apt-get install wget gnupg -y
+ 
+RUN wget -q -O - https://nightly.odoo.com/odoo.key | gpg --dearmor -o /usr/share/keyrings/odoo-archive-keyring.gpg
+RUN echo 'deb [signed-by=/usr/share/keyrings/odoo-archive-keyring.gpg] https://nightly.odoo.com/16.0/nightly/deb/ ./' | tee /etc/apt/sources.list.d/odoo.list
+
+RUN apt-get update
+ 
+RUN apt-get install odoo -y
